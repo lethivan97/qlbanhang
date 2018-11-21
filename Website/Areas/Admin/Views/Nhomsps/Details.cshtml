@@ -1,0 +1,52 @@
+﻿@model Website.Models.Nhomsp
+
+@{
+    ViewBag.Title = "Chi tiết nhóm sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Xem chi tiết</title>
+</head>
+<body>
+    <div>
+        <h4 style="padding-top:20px">Chi tiết nhóm <span class="text-primary" style="text-decoration:underline">@Model.TenNhomsp</span> </h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+               @Html.DisplayNameFor(model => model.TenNhomsp)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TenNhomsp)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.BiDanh)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.BiDanh)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PhanLoaiID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PhanLoai.TenPhanLoai)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Về danh sách", "Index", null, new { @class = "btn btn-sm btn-success" })
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.NhomspID },new {@class="btn btn-default btn-sm" }) 
+       
+    </p>
+</body>
+</html>

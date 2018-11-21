@@ -1,0 +1,116 @@
+﻿@model Website.Models.SanPham
+@{
+    ViewBag.Title = "Thông tin sản phẩm" + Model.TenSanPham;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+    <style>
+        img{
+            width:100%;
+        }
+        dt,dd{
+            height:30px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h4 style="padding-top:20px">Chi tiết sản phẩm <span class="text-primary" style="text-decoration:underline">@Model.TenSanPham</span></h4>
+        <hr />
+        <div class="col-md-4 col-xs-6 text-center">
+            <p>
+                <img src="~/Content/images/Photos/@Model.Hinh" alt="@Model.TenSanPham"/>
+            </p>
+            <p>
+                Hình sản phẩm <span class="text-success">@Model.TenSanPham</span> 
+            </p>
+        </div>
+        <div class="col-md-8 col-xs-6">
+            <dl class="dl-horizontal" style="margin-top:20px;">
+                <dt>
+                    @Html.DisplayNameFor(model=>model.TenSanPham)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TenSanPham)
+                </dd>
+
+                <dt>
+                   @Html.DisplayNameFor(model => model.MoTa)
+                </dt>
+
+                <dd>
+                    @Html.Raw(Model.MoTa)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DonGia)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DonGia)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.GiaKM)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.GiaKM)
+                </dd>
+
+                <dt>
+                   @Html.DisplayNameFor(model => model.NgayCapNhat)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NgayCapNhat)
+                </dd>
+
+                <dt>
+                   @Html.DisplayNameFor(model => model.NgungBan)
+                </dt>
+
+                <dd>
+                    @if (Model.NgungBan == false)
+                    {
+                        <span>Chưa ngừng</span>
+                    }
+                    else
+                    {
+                        <span>Đã ngừng</span>
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BiDanh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BiDanh)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NhomspID)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Nhomsp.TenNhomsp)
+                </dd>
+
+            </dl>
+            <p aline="text-cent">
+                @Html.ActionLink("Về danh sách", "Index", null, new { @class = "btn btn-sm btn-success" })
+                @Html.ActionLink("Sửa", "Edit", new { id = Model.SanPhamID }, new { @class = "btn btn-sm btn-primary" })
+               
+            </p>
+        </div>
+    </div>  
+</body>
+</html>

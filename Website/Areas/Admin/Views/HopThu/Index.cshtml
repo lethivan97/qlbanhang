@@ -1,0 +1,152 @@
+﻿@model IEnumerable<Website.Models.HopThu>
+
+@{
+    ViewBag.Title = "Hộp thư";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Hộp thư</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Danh sách hộp thư</h3>
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                   Hộp thư
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="dataTables-example_wrapper" class="dataTable_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="col-md-12">
+                            <div id="dataTables-example_filter" class="dataTable_filter">
+                                @using (Ajax.BeginForm("Search", "HopThu", new { areas = "Admin" }, new AjaxOptions() { AllowCache = true, HttpMethod = "Get", OnFailure = "alert('Lỗi ajax')", InsertionMode = InsertionMode.Replace, UpdateTargetId = "divTable_HopThu" }, new { id = "frmSearch_DonHang" }))
+                                 {
+                                    <div class="col-md-1">
+                                        <label>Tìm kiếm: </label>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <input onkeyup="document.getElementById('btnSubmitTim').click()" type="text" id="tukhoa" name="tukhoa" class="form-control input-sm" placeholder="Nhập tên sản phẩm cần tìm ..." aria-controls="dataTable" style="border-radius:10px">
+                                        <button type="submit" id="btnSubmitTim" class="btn btn-sm hidden">Tìm</button>
+                                    </div>
+
+                                }
+
+                            </div>
+                        </div>
+
+                        <div id="divTable_HopThu" class="col-md-12" style="margin-top:20px">
+                            <table class="table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="vertical-align:middle;text-align:center">
+                                            @Html.DisplayNameFor(model => model.Hoten)
+                                        </th>
+                                        <th style="vertical-align:middle;text-align:center">
+                                            @Html.DisplayNameFor(model => model.Email)
+                                        </th>
+                                        <th style="vertical-align:middle;text-align:center">
+                                            @Html.DisplayName("Điện thoại")
+                                        </th>
+                                        <th style="vertical-align:middle;text-align:center">
+                                            @Html.DisplayName("Ngày cập nhập")
+                                        </th>
+                                        <th style="vertical-align:middle;text-align:center">
+                                            @Html.DisplayName("Đã đọc")
+                                        </th>
+                                        <th style="vertical-align:middle;text-align:center">
+                                            @Html.DisplayName("Tiêu đề")
+                                        </th>
+                                        <th style="vertical-align:middle;text-align:center">
+                                            @Html.DisplayName("Nội dung")
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Hoten)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.SDT)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NgayCapNhat)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DaDoc)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TieuDe)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.NoiDung)
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#hopthu@(item.HopThuID)">Xem chi tiết</button>
+                                                <div id="hopthu@(item.HopThuID)" class="modal fade" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Chi tiết hộp thư của <span class="text-danger">@item.Hoten</span> </h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table table-striped table-bordered">
+                                                                    <tr>
+                                                                        <th>Họ tên</th>
+                                                                        <th>Email</th>
+                                                                        <th>Nội dung</th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>@item.Hoten</td>
+                                                                        <td>@item.Email</td>
+                                                                        <td>@item.NoiDung</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                @Html.ActionLink("Sửa", "Edit", new { id = item.HopThuID }, new { @class = "btn btn-xs btn-default" })
+                                                                <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @*@Html.ActionLink("Xem chi tiết", "Details", new { id = item.HopThuID }, new { @class = "btn btn-primary btn-xs" })*@
+                                                @Html.ActionLink("Sửa", "Edit", new { id = item.HopThuID }, new { @class = "btn btn-default btn-xs" })
+                                                @Html.ActionLink("Xóa", "Delete", new { id = item.HopThuID }, new { @class = "btn btn-default btn-xs" })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>                            
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+</body>
+</html>

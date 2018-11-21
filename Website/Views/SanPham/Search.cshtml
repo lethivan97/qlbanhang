@@ -1,0 +1,59 @@
+﻿@using Website.Models;
+@model IEnumerable<SanPham>
+@{
+    ViewBag.Title = "Bạn đang tìm kiếm sản phẩm " + ViewBag.SanPhamTimKiem + " tại cửa hàng K&K ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<link href="~/fonts/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<style>
+    .cart a {
+        color: red !important;
+    }
+
+        .cart a:hover i {
+            color: black !important;
+        }
+</style>
+<div class="row lienhe">
+    <h4>Kết quả tìm kiếm với từ khoá <span class="text-success">@ViewBag.SanPhamTimKiem</span> </h4>
+</div>
+@if (Model.Count() == 0)
+{
+    <h4 class="text-danger">Không tìm thấy kết quả nào với từ khoá @ViewBag.SanPhamTimKiem</h4>
+}
+else
+{
+    foreach (SanPham item in Model)
+    {
+        <div class="col-md-3 col-xs-6 ">
+            <div class="sanpham_new">
+                <div class="sanPhamNoiBat col-xs-12">
+                    <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">
+                        <img src="~/Content/images/Photos/@item.Hinh" alt="@item.TenSanPham" class="image" />
+                    </a>
+                    <div class="middle">
+                        <p class="text-danger" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:22px">@item.TenSanPham</p>
+                        <p style="font-size:16px">@item.Nhomsp.TenNhomsp</p>
+                        <div class="shop">
+                            <a href="@Url.Action("ThemVaoGio","Shopping",new {SanPhamID=item.SanPhamID })">
+                                <i class="fa fa-shopping-cart fa-2x"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <p class="namesp">
+                    <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">@item.TenSanPham</a>
+                </p>
+                <div class="col-md-8 cost-left" style="text-align:center">
+                    <strong>Giá : @item.DonGia VNĐ</strong>
+                </div>
+                <div class="col-md-4 cart">
+                    <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">Chi tiết</a>
+                </div>
+            </div>
+        </div>
+    }
+}
+

@@ -1,0 +1,57 @@
+﻿@model Website.Models.Nhomsp
+
+@{
+    ViewBag.Title = "Xóa nhóm sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Xóa</title>
+</head>
+<body>
+    <h4 style="padding-top:20px">Bạn có chắc chắn muốn xóa nhóm sản phẩm <span class="text-danger" style="text-decoration:underline">@Model.TenNhomsp</span> này không ?</h4>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model=>model.TenNhomsp)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.TenNhomsp)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.BiDanh)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.BiDanh)
+            </dd>
+    
+            <dt>
+               @Html.DisplayNameFor(model => model.PhanLoaiID)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PhanLoai.TenPhanLoai)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                @Html.ActionLink("Về danh sách", "Index", null, new { @class = "btn btn-sm btn-success" })
+                <input type="submit" value="Xóa" class="btn btn-default btn-sm" /> 
+                
+            </div>
+        }
+    </div>
+</body>
+</html>

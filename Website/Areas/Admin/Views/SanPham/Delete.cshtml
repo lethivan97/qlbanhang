@@ -1,0 +1,120 @@
+﻿@model Website.Models.SanPham
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Xóa</title>
+    <style>
+        img{
+            width:100%;
+        }
+        dt,dd{
+            height:30px;
+        }
+    </style>
+</head>
+<body>
+    <h4 style="padding-top:20px">Bạn có chắc chắn muốn xóa sản phẩm <span class="text-danger" style="text-decoration:underline">@Model.TenSanPham</span> này không ?</h4>
+    <hr />
+    <div>
+        <div class="col-md-4 col-xs-6 text-center">
+            <p>
+                <img src="~/Content/images/Photos/@Model.Hinh" alt="@Model.TenSanPham" />
+            </p>
+            <p>
+                Hình sản phẩm <span class="text-success">@Model.TenSanPham</span>
+            </p>
+        </div>
+        <div class="col-md-8 col-xs-6">
+            <dl class="dl-horizontal" style="margin-top:20px;">
+                <dt>
+                    @Html.DisplayNameFor(model=>model.TenSanPham)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TenSanPham)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model=>model.MoTa)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MoTa)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model=>model.DonGia)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.DonGia)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.GiaKM)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.GiaKM)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NgayCapNhat)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NgayCapNhat)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NgungBan)
+                </dt>
+
+                <dd>
+                    @if (Model.NgungBan == false)
+                    {
+                        <span>Chưa ngừng</span>
+                    }
+                    else
+                    {
+                        <span>Đã ngừng</span>
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.BiDanh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.BiDanh)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.NhomspID)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Nhomsp.TenNhomsp)
+                </dd>
+
+            </dl>          
+        </div>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                @Html.ActionLink("Về danh sách", "Index", null, new { @class = "btn btn-sm btn-success" })
+                <input type="submit" value="Xóa" class="btn btn-default" />               
+            </div>
+        }
+    </div>
+</body>
+</html>

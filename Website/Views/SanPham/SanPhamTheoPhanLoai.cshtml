@@ -1,0 +1,60 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Website.Models;
+@model IPagedList<SanPham>
+@{
+    ViewBag.Title = "Sản phẩm theo loại";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/fonts/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<style>
+    .cart a {
+        color: red !important;
+    }
+
+        .cart a:hover i {
+            color: black !important;
+        }
+</style>
+<div class="row lienhe" id="sanphamtheophanloai">
+    <h4>
+        <strong>TẤT CẢ SẢN PHẨM</strong>
+    </h4>
+    @foreach (SanPham item in Model)
+    {
+        <div class="col-md-3 col-xs-6 ">
+            <div class="sanpham_new ">
+                <div class="sanPhamNoiBat">
+                    <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">
+                        <img src="~/Content/images/Photos/@item.Hinh" alt="@item.TenSanPham" class="image" />
+                    </a>
+                    <div class="middle">
+                        <p class="text-danger" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:22px">@item.TenSanPham</p>
+                        <p style="font-size:16px">@item.Nhomsp.TenNhomsp</p>
+                        <div class="shop">
+                            <a href="@Url.Action("ThemVaoGio","Shopping",new {SanPhamID=item.SanPhamID })">
+                                <i class="fa fa-shopping-cart fa-2x"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <p class="namesp col-md-12">
+                    <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">@item.TenSanPham</a>
+                </p>
+                <div class="col-md-8 cost-left col-xs-8" style="text-align:center">
+                    <strong>Giá : @item.DonGia VNĐ</strong>
+                </div>
+                <div class="col-md-4 cart col-xs-4">
+                    <a href="@Url.Action("Detail","SanPham",new {id=item.SanPhamID })">
+                        Chi tiết
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="col-md-12 text-center">
+    @Html.PagedListPager(Model, sotrang => Url.Action("SanPhamTheoPhanLoai", new { @phanLoaiId = Request.QueryString["phanLoaiId"], page = sotrang }), new PagedListRenderOptions() { Display = PagedListDisplayMode.Always, DisplayLinkToFirstPage = PagedListDisplayMode.Always, DisplayLinkToLastPage = PagedListDisplayMode.Always })
+</div>
+
+

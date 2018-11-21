@@ -1,0 +1,182 @@
+﻿@using Website.Models
+@*@model SanPham*@
+@{
+    ViewBag.Title = "Trang chủ";
+    DatHang dathang = new DatHang();
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<link href="~/Content/src/css/style.css" rel="stylesheet" />
+<script src="~/Content/src/vmc.slide.effects.js"></script>
+<link href="~/fonts/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<style>
+    .cart a{
+    color:red !important;
+    }
+    .cart a:hover i{
+    color:black !important;
+    }
+</style>
+<div class="container-fluid" id="index">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+        </ol>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="~/Content/images/about/img2-gioithieu.PNG" />
+            </div>
+            <div class="item">
+                <img src="~/Content/images/about/img3-gioithieu.PNG" />
+            </div>
+            <div class="item">
+                <img src="~/Content/images/about/img5-gioithieu.PNG" />
+            </div>
+            <div class="item">
+                <img src="~/Content/images/about/img1-gioithieuPNG.PNG" />
+            </div>
+        </div>
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>           
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="col-md-3 col-xs-3">
+                <div class="icon">
+                    <i class="fa fa-thumbs-o-up fa-3x"></i>
+                    <h4>CAM KẾT CHẤT LƯỢNG</h4>
+                    <p>Hoàn tiền nếu không hài lòng</p>
+                </div>
+            </div>
+            <div class="col-md-3  col-xs-3">
+                <div class="icon">
+                    <i class="fa fa-money fa-3x"></i>
+                    <h4>GIÁ CẢ CẠNH TRANH</h4>
+                    <p>Giảm 5-20 % cho khách VIP</p>
+                </div>
+            </div>
+            <div class="col-md-3  col-xs-3">
+                <div class="icon">
+                    <i class="fa fa-plane fa-3x"></i>
+                    <h4>GIAO HÀNG TOÀN QUỐC</h4>
+                    <p>Miễn phí hóa đơn từ 1 triệu</p>
+                </div>
+            </div>
+            <div class="col-md-3  col-xs-3">
+                <div class="icon">
+                    <i class="fa fa-clock-o fa-3x"></i>
+                    <h4>GIỜ MỞ CỬA HÀNG</h4>
+                    <p>Mở : 8:30 AM - Đóng: 22:00 PM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="row heading">
+                <div class="line col-md-12 col-xs-12"></div>
+                <div class="text-heading col-md-12 col-xs-12">
+                    <a href="@Url.Action("SanPhamTheoPhanLoai","SanPham",new { @phanLoaiId =2})"><span class="glyphicon glyphicon-star"></span> QUẦN ÁO NAM MỚI NHẤT <span class="glyphicon glyphicon-star"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container ">
+    <div class="row anh">
+          @foreach(SanPham item in ViewBag.listNam)
+          {
+              <div class="col-md-3 col-xs-6" >
+                  <div class="sanpham_new ">
+                      <div class="sanPhamNoiBat col-xs-12">
+                          <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">
+                              <img src="~/Content/images/Photos/@item.Hinh" alt="@item.TenSanPham" class="image" />
+                          </a>
+                          <div class="middle">
+                              <p class="text-danger" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:22px">@item.TenSanPham</p>
+                              <p style="font-size:16px">@item.Nhomsp.TenNhomsp</p>
+                              <div class="shop">
+                                  <a href="@Url.Action("ThemVaoGio","Shopping",new {SanPhamID=item.SanPhamID })">
+                                      <i class="fa fa-shopping-cart fa-2x"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                      <p class="namesp col-md-12 col-xs-12">
+                          <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">@item.TenSanPham</a>
+                      </p>
+                      <div class="col-md-8 cost-left col-xs-8" style="text-align:center">
+                          <strong>Giá : @item.DonGia VNĐ</strong>
+                      </div>
+                      <div class="col-md-4 cart col-xs-4">
+                          <a href="@Url.Action("Detail","SanPham",new {id=item.SanPhamID })">
+                              Chi tiết
+                          </a>
+                      </div>
+                  </div>                 
+              </div>            
+          }
+        </div>
+</div>
+<div class="col-md-12 col-xs-12">
+    <div class="row heading">
+        <div class="line"></div>
+        <div class="text-heading">
+            <a href="@Url.Action("SanPhamTheoPhanLoai","SanPham",new { @phanLoaiId = 1 })"><span class="glyphicon glyphicon-star"></span> QUẦN ÁO NỮ MỚI NHẤT <span class="glyphicon glyphicon-star"></span></a>
+        </div>
+    </div>
+</div>
+<div class="container ">
+    <div class="row anh">
+        @foreach (SanPham item in ViewBag.listNu)
+        {
+            <div class="col-md-3 col-xs-6 ">
+                <div class="sanpham_new ">
+                    <div class="sanPhamNoiBat">
+                        <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">
+                            <img src="~/Content/images/Photos/@item.Hinh" alt="@item.TenSanPham" class="image" />
+                        </a>
+                        <div class="middle">
+                            <p class="text-danger" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;font-size:22px">@item.TenSanPham</p>
+                            <p style="font-size:16px">@item.Nhomsp.TenNhomsp</p>
+                            <div class="shop">
+                                <a href="@Url.Action("ThemVaoGio","Shopping",new {SanPhamID=item.SanPhamID })">
+                                    <i class="fa fa-shopping-cart fa-2x"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="namesp col-md-12">
+                        <a href="@Url.Action("Detail","SanPham",new { @id = item.SanPhamID })">@item.TenSanPham</a>
+                    </p>
+                    <div class="col-md-8 cost-left col-xs-8" style="text-align:center">
+                        <strong>Giá : @item.DonGia VNĐ</strong>
+                    </div>
+                    <div class="col-md-4 cart col-xs-4">
+                        <a href="@Url.Action("Detail","SanPham",new {id=item.SanPhamID })">
+                            Chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

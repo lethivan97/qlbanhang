@@ -1,0 +1,99 @@
+﻿@model Website.Models.DatHang
+
+@{
+    ViewBag.Title = "Đơn đặt hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Xem chi tiết</title>
+</head>
+<body>
+    <div>
+        <h4 style="padding-top:20px">Chi tiết đơn đặt của <span style="text-decoration:underline" class="text-danger">@Model.Hoten</span></h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Hoten)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Hoten)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DienThoai)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DienThoai)
+            </dd>
+
+            <dt>
+               @Html.DisplayNameFor(model => model.DiaChi)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DiaChi)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NgayDat)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NgayDat)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TriGia)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TriGia)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DaGiao)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DaGiao)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.NgayGiao)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NgayGiao)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.GhiChu)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.GhiChu)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Sửa", "Edit", new { id = Model.DatHangID }, new { @class = "btn btn-sm btn-default" })
+        @Html.ActionLink("Về danh sách", "Index", null, new { @class = "btn btn-sm btn-success" })
+    </p>
+</body>
+</html>

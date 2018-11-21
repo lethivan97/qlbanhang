@@ -1,0 +1,148 @@
+﻿@using Website.Models;
+@{
+    ViewBag.Title = "Trang Admin";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="text-danger text-center " style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode';">Shop K&K</h2>
+            </div>
+            <div class="panel-body">
+                <div id="dataTables-example_wrapper" class="dataTable_wrapper form-inline dt-bootstrap no-footer">
+                    <h4 class="text-success">Sản phẩm</h4>
+                       <table class="table table-striped table-hover">
+                           <thead>
+                               <tr>
+                                   <th>&nbsp;</th>
+                                   <th>Tên sản phẩm</th>
+                                   <th>Tên nhóm</th>
+                                   <th>Đơn giá nhập</th>                                  
+                                   <th>Tình trạng</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               @foreach(SanPham item in ViewBag.lstSanPham)
+                               {
+                                   <tr>
+                                       <td>
+                                           <img src="~/Content/images/Photos/@item.Hinh" width="90" height="110"/>
+                                       </td>
+                                       <td>@item.TenSanPham</td>
+                                       <td>@item.Nhomsp.TenNhomsp</td>
+                                       <td>@item.DonGia</td>
+                                       @if (item.NgungBan == true)
+                                       {
+                                           <td>Ngừng bán</td>
+                                       }
+                                       else
+                                       {
+                                           <td>Còn hàng</td>
+                                       }
+                                   </tr>
+                               }
+                               <tr>
+                                   <td colspan="5" style="text-align:right" class="warning">
+                                       <a href="@Url.Action("Index","SanPham")">Xem chi tiết sản phẩm</a>
+                                   </td>
+                               </tr>
+                           </tbody>
+                       </table>
+                        <hr />
+                    <h4 class="text-success">Đơn đặt hàng</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Họ tên</th>
+                                <th>Điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Tổng tiền</th>
+                                <th>Ngày giao</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(DatHang item in ViewBag.lstDatHang)
+                            {
+                                <tr>
+                                    <td>@item.Hoten</td>
+                                    <td>@item.DienThoai</td>
+                                    <td>@item.DiaChi</td>
+                                    <td>@item.TriGia</td>
+                                    <td>@item.NgayGiao</td>
+                               </tr>
+                            }
+                            <tr>
+                                <td colspan="5" style="text-align:right" class="warning">
+                                    <a href="@Url.Action("Index","DatHang")">Xem chi tiết đơn đặt hàng</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
+                    <h4 class="text-success">Nhóm sản phẩm</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Tên phân loại</th>
+                                <th>Tên nhóm</th>
+                                <th>Bí danh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(Nhomsp item in ViewBag.lstNhomSP)
+                            {
+                                <tr>
+                                    <td>@item.PhanLoai.TenPhanLoai</td>
+                                    <td>@item.TenNhomsp</td>
+                                    <td>@item.BiDanh</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="3" style="text-align:right" class="warning">
+                                    <a href="@Url.Action("Index","Nhomsps")">Xem chi tiết nhóm sản phẩm</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr />
+                    <h4 class="text-success">Hộp thư</h4>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Nội dung</th>
+                                <th>Tình trạng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(HopThu item in ViewBag.lstHopThu)
+                            {
+                                <tr>
+                                    <td>@item.Hoten</td>
+                                    <td>@item.Email</td>
+                                    <td>@item.NoiDung</td>
+                                    @if (item.DaDoc == true)
+                                    {
+                                        <td>Đã phản hồi</td>
+                                    }
+                                    else
+                                    {
+                                        <td>Chưa phản hồi</td>
+                                    }
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="4" style="text-align:right" class="warning">
+                                    <a href="@Url.Action("Index","HopThu")">Xem chi tiết hộp thư</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

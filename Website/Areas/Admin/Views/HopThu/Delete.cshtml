@@ -1,0 +1,89 @@
+﻿@model Website.Models.HopThu
+
+@{
+    ViewBag.Title = "Hộp thư";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Xóa</title>
+</head>
+<body>
+    <h4 style="padding-top:20px">Bạn chắc chắn có muốn xóa thư của <span style="text-decoration:underline" class="text-danger">@Model.Hoten</span> không ?</h4>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model=>model.Hoten)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Hoten)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.SDT)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.SDT)
+            </dd>
+
+            <dt>
+               @Html.DisplayNameFor(model => model.NgayCapNhat)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.NgayCapNhat)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DaDoc)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DaDoc)
+            </dd>
+
+            <dt>
+               @Html.DisplayNameFor(model => model.TieuDe)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TieuDe)
+            </dd>
+
+            <dt>
+               @Html.DisplayNameFor(model => model.NoiDung)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.NoiDung)
+            </dd>
+      
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                @Html.ActionLink("Về danh sách", "Index", null, new { @class = "btn btn-sm btn-success" })
+                <input type="submit" value="Xóa" class="btn btn-default" /> 
+                
+            </div>
+        }
+    </div>
+</body>
+</html>

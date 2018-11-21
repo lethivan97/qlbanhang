@@ -1,0 +1,183 @@
+﻿@using Website.Models
+@model List<CartItem>
+@{ 
+    ViewBag.Title = "Giỏ hàng của bạn";
+    DatHang dathang = new DatHang();
+}
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+<div class="container">
+    <div class="row lienhe">
+        <h4>GIỎ HÀNG</h4>
+        <hr />
+    </div>
+    @if(Model ==null || Model.Count == 0)
+    {
+        <h4 class="text-danger">Không có sản phẩm nào được đặt mua</h4>
+        <a class="btn btn-primary" href="@(Request.UrlReferrer != null ? Url.Action("Index","Home"):Request.UrlReferrer.ToString() ) ">&larr; Mua sản phẩm</a>
+    }
+    else
+    {
+       <table class="table table-striped">            
+           <thead>
+               <tr class="success">
+                   <th class="text-center">Thông tin sản phẩm</th>
+                   <th class="text-center">Tên sản phẩm</th>
+                   <th class="text-center">Đơn giá</th>
+                   <th class="text-center">Số lượng</th>
+                   <th class="text-center">Thành tiền</th>
+                   <th class="text-center">&nbsp;</th>
+               </tr>
+           </thead>
+           <tbody>
+               @foreach(CartItem item in Model)
+               {
+                   <tr>
+                       <td class="text-center" style="vertical-align:middle">
+                           <a href="@Url.Action("Detail","SanPham",new {id = item.SanPhamID })">
+                               <img src="~/Content/images/Photos/@item.Hinh" alt="@item.TenSanPham" width="90" height="110"/>
+                           </a>
+                       </td>
+                       <td class="text-center" style="vertical-align:middle">
+                           <a href="@Url.Action("Detail","SanPham",new {id = item.SanPhamID })">
+                               @item.TenSanPham
+                           </a>
+                       </td>
+                       <td class="text-center" style="vertical-align:middle">
+                           @item.DonGia VNĐ
+                       </td>
+                       <td align="center" class="text-center" style="vertical-align:middle">
+                           <input type="number" name="@item.SanPhamID" value="@item.SoLuong" min="1" step="1" style="width:50px"/>
+                       </td>
+                       <td class="text-center" style="vertical-align:middle">
+                          <span id="item@(item.SanPhamID)">@item.ThanhTien VNĐ</span>
+                       </td>
+                       <td class="text-center" style="vertical-align:middle">
+                           <form method="post" action="@Url.Action("XoaSanPhamTrongGio", "Shopping",new { SanPhamID = item.SanPhamID })">
+                               <input type="hidden" name="SanPhamID" value="@item.SanPhamID" />
+                               <button type="submit" onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này khỏi giỏ?');" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> </button>
+                           </form> 
+                       </td>
+                   </tr>
+               }
+               <tr>
+                   <td>&nbsp;</td>
+                   <td>&nbsp;</td>
+                   <td>&nbsp;</td>
+                   <td class="text-center" style="vertical-align:middle">
+                       Tổng :
+                       <b id="tongsoluong">
+                          @((Session["shopping"] as List<CartItem>).Sum(m => m.SoLuong).ToString()) 
+                       </b>
+                   </td>
+                   <td class="text-center" style="vertical-align:middle">
+                       Tổng :
+                       <b id="tongthanhtien">
+                           @((Session["shopping"] as List<CartItem>).Sum(m => m.ThanhTien).ToString()) VNĐ
+                       </b>
+                   </td>
+                   <td>&nbsp;</td>
+               </tr>
+           </tbody>
+       </table>
+    <div class="pull-right">
+        <a class="btn btn-primary" href="@(Request.UrlReferrer != null ? Url.Action("Index","Home"):Request.UrlReferrer.ToString() ) ">Mua tiếp</a>
+        <button id="btnThanhToan" class="btn btn-success" data-toggle="modal" data-target="#modalThanhToan">Thanh toán</button>
+    </div>
+    <div class="container">
+        <div class="modal fade" id="modalThanhToan" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background:#3b5999;color:#ffffff">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title text-center" id="myModalLabel">
+                            Thông tin giao hàng
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" action="@Url.Action("ThanhToan","Shopping")" method="post">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="hoten">Họ tên:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => dathang.Hoten, new { @class = "form-control", id = "hoten" })
+                                    @Html.ValidationMessageFor(m => dathang.Hoten, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="dienthoai">Điện thoại:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => dathang.DienThoai, new { @class = "form-control", id = "dienthoai" })
+                                    @Html.ValidationMessageFor(m => dathang.DienThoai, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="diachi">Điạ chỉ:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => dathang.DiaChi, new { @class = "form-control", id = "diachi" })
+                                    @Html.ValidationMessageFor(m => dathang.DiaChi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="email">Email:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(m => dathang.Email, new { @class = "form-control", id = "email" })
+                                    @Html.ValidationMessageFor(m => dathang.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="ghichu">Ghi chú:</label>
+                                <div class="col-sm-8">
+                                    @Html.TextAreaFor(m => dathang.GhiChu, new { rows = "5", cols = "20", @class = "form-control", id = "ghichu" })
+                                    @Html.ValidationMessageFor(m => dathang.GhiChu, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <button type="submit" class="btn btn-default">Thanh toán</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            $("input[type='number']").change(function () {
+                var soluongmoi = $(this).val();
+                var sanphamID = $(this).attr("name");
+                $.ajax({
+                    url: "@Url.Action("SuaSoLuongMua")",
+                    data: { SanPhamID: sanphamID, soLuongMoi:soluongmoi},
+                    method : "GET",
+                    dataType : "json",
+                    complete: function (data) {
+                        data = JSON.parse(data.responseText);
+                        if (data.trangthai == 1) {
+                            $(this).val(data.soluongmoi);
+                            var stringthanhtienmoi = data.thanhtienmoi.toString();
+                            $("#item" + sanphamID).text(stringthanhtienmoi + " VNĐ");
+                            $("#tongsoluong").text(data.tongsoluongmoi);
+                            $("#tongthanhtien").text(data.tongthanhtienmoi.toString() + " VNĐ");
+                        }
+                        else {
+                            alert("Xảy ra lỗi khi xử lý!");
+                            $(this).val(data.soluongcu);
+                        }
+                    }
+                })
+            });
+        });
+    </script> 
+    }
+

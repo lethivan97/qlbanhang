@@ -1,0 +1,166 @@
+﻿@using Website.Models;
+@using Microsoft.AspNet.Identity;
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        Menu
+    </title>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    <style>
+        .snakeBoxItem .nhomsp a{
+            text-decoration:none;
+        }
+        .snakeBoxItem .nhomsp a:hover{
+            border-bottom:2px solid #fee800;
+            }
+        #inputSeach input{
+            border-radius:20px;
+        }
+        .nav_1 a{
+            border : 1px solid white;
+            border-radius : 10px;
+        } 
+        .menu_hover a:hover{
+            background-color:none !important;
+            border : 1px solid white;
+            border-radius : 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-static-top">
+
+        <div class="container">
+            <div class="col-md-3">
+                <a href="@Url.Action("Index","Home")">
+                    <img src="~/Content/images/logo.PNG" />
+                </a>
+            </div>   
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 0.997596px;">
+               
+                    @if (Request.IsAuthenticated)
+                    {
+                        
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
+                            {
+                            @Html.AntiForgeryToken()
+                                <ul class="nav navbar-nav navbar-right snakeMenu2">
+                                    <li class="snakeMenuItem" data-menuitem="7">
+                                        @Html.ActionLink("Xin chào " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                    </li>
+                                    <li class="snakeMenuItem" data-menuitem="8"><a href="javascript:document.getElementById('logoutForm').submit()">Đăng xuất</a></li>
+                                    <li class="snakeMenuItem" data-menuitem="9">
+                                        <a href="@Url.Action("Giohang","Shopping")">
+                                            <span class="glyphicon glyphicon-shopping-cart"></span>Giỏ hàng <span class="badge">
+                                                @if (Session["shopping"] == null)
+                                                {
+                                                    <span>0</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>
+                                                        @((Session["shopping"] as List<CartItem>).Sum(m => m.SoLuong))
+                                                    </span>
+                                                }
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                    }
+                    else
+                    {
+                        <ul class="nav navbar-nav navbar-right snakeMenu2">
+                            <li class="snakeMenuItem" data-menuitem="7">
+                                <a href="@Url.Action( "Register", "Account")" data-toggle="modal" style="background:url(../../Content/images/regbg.png) left  no-repeat;padding-left:20px;" >@*<span class="glyphicon glyphicon-user"></span>*@ Đăng ký</a>
+
+                            </li>
+                            <li class="snakeMenuItem" data-menuitem="8">
+                                <a href="@Url.Action("Login", "Account")" data-toggle="modal" style="background:url(../../Content/images/loginbg.png) left no-repeat;padding-left:25px">@*<span class="glyphicon glyphicon-log-in"></span>*@ Đăng nhập</a>
+
+                            </li>
+                            <li class="snakeMenuItem" data-menuitem="9">
+                                <a href="@Url.Action("Giohang","Shopping")" style="background:url(../../Content/images/carticon.png) left no-repeat;padding-left:25px">
+                                    @*<span class="glyphicon glyphicon-shopping-cart"></span>*@Giỏ hàng <span class="badge">
+                                        @if (Session["shopping"] == null)
+                                        {
+                                            <span>0</span>
+                                        }
+                                        else
+                                        {
+                                            <span>
+                                                @((Session["shopping"] as List<CartItem>).Sum(m => m.SoLuong))
+                                            </span>
+                                        }
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                  }                       
+                <ul class="nav navbar-nav snakeMenu navbar-right" style="margin-right: 50px;">
+                    <li class="snakeMenuItem nav_1" data-menuitem="1"><a href="@Url.Action("Index","Home")" >TRANG CHỦ</a></li>
+                    <li class="snakeMenuItem menu_hover" data-menuitem="2"><a href="@Url.Action("About","Home")" >GIỚI THIỆU</a></li>
+                    <li class="snakeMenuItem menu_hover" data-menuitem="3"><a href="@Url.Action("SanPhamTheoPhanLoai","SanPham",new { @phanLoaiId =2})">QUẦN ÁO NAM <span class="caret"></span></a></li>
+                    <li class="snakeMenuItem menu_hover" data-menuitem="4"><a href="@Url.Action("SanPhamTheoPhanLoai","SanPham",new { @phanLoaiId = 1 })">QUẦN ÁO NỮ <span class="caret"></span></a></li>
+                    <li class="snakeMenuItem menu_hover" data-menuitem="5"><a href="@Url.Action("Contact","Home")">LIÊN HỆ</a></li>
+                    <li id="inputSeach" style="margin-top:10px" class="dropdown snakeMenuItem" data-menuitem="9">
+                        <form action="@Url.Action("Search","SanPham")" method="get">
+                            <input type="text" placeholder="Bạn cần tìm gì ... ?" name="txtSearch" id="Search" class="form-control" value="@ViewBag.Search" />                      
+                        </form>                        
+                    </li>
+                </ul>                        
+            </div>
+        </div>
+    </nav>
+
+    <div class="box snakeBox">
+        <div class="container">
+            <div class="snakeBoxItem" data-boxitem="3" style="margin-bottom:30px;">
+                <div class="row">
+                    @foreach (Nhomsp item in ViewBag.NhomspNam)
+                    {
+                        <div class="col-md-3">
+                            <div class="nhomsp">
+                                <a href="@Url.Action("SanPhamTheoNhomSP","SanPham",new { @nhomSanPhamID=item.NhomspID})" style="color:white;">
+                                    <i class="fa fa-heart-o fa-1x" style="color:red"></i>    @item.TenNhomsp
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="snakeBoxItem" data-boxitem="4" style="margin-bottom:20px;">
+                <div class="row">
+                    @foreach (Nhomsp item in ViewBag.NhomspNu)
+                    {
+                        <div class="col-md-3">
+                            <div class="nhomsp">
+                                <a href="@Url.Action("SanPhamTheoNhomSP","SanPham",new { @nhomSanPhamID=item.NhomspID})" style="color:white;"><i class="fa fa-heart-o fa-1x" style="color:red"></i> @item.TenNhomsp</a>
+                            </div>
+                        </div>
+                    }
+                </div>              
+            </div>         
+        </div>
+    </div>
+    <script src="~/Scripts/snakeMenu-1.1.min.js"></script>
+    <script src="~/Scripts/scripts_new.js"></script>
+</body>
+</html>
+

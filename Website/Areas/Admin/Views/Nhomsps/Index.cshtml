@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Website.Models.Nhomsp>
+
+@{
+    ViewBag.Title = "Danh sách nhóm sản phẩm";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Nhóm sản phẩm</title>
+    <style>
+        table th,td{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <link href="~/Areas/Admin/Content/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="~/Areas/Admin/Content/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="~/Areas/Admin/Content/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="~/Areas/Admin/Content/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="~/Areas/Admin/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Danh sách nhóm sản phẩm</h3>
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Nhóm sản phẩm
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="dataTables-example_wrapper" class="dataTable_wrapper form-inline dt-bootstrap no-footer">
+                        <p>
+                            @Html.ActionLink("Tạo mới", "Create",new { id="#"},new { @class= "btn btn-info btn-xs" })
+                        </p>
+                        <table class="table table-striped table-bordered table-hover">
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Tên nhóm")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Bí danh")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Phân loại")
+                                </th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TenNhomsp)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.BiDanh)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PhanLoai.TenPhanLoai)
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#hopthu@(item.NhomspID)">Xem chi tiết</button>
+                                        <div id="hopthu@(item.NhomspID)" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Chi tiết nhóm sản phẩm của <span class="text-danger">@item.TenNhomsp</span> </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-striped table-bordered">
+                                                            <tr>
+                                                                <th>Tên nhóm</th>                               
+                                                                <th>Tên phân loại</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>@item.TenNhomsp</td>
+                                                                <td>@item.PhanLoai.TenPhanLoai</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        @Html.ActionLink("Sửa", "Edit", new { id = item.NhomspID }, new { @class = "btn btn-xs btn-default" })                                                
+                                                        <button type="button" class="btn btn-default btn-xs" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*@Html.ActionLink("Xem chi tiết", "Details", new { id = item.NhomspID },new {@class="btn btn-primary btn-xs" })*@ 
+                                        @Html.ActionLink("Sửa", "Edit", new { id = item.NhomspID }, new { @class = "btn btn-default btn-xs" }) 
+                                       
+                                        @Html.ActionLink("Xóa", "Delete", new { id = item.NhomspID }, new { @class = "btn btn-default btn-xs" })
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <script src="~/Areas/Admin/Content/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Areas/Admin/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="~/Areas/Admin/Content/vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="~/Areas/Admin/Content/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/Areas/Admin/Content/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Content/vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Areas/Admin/Content/dist/js/sb-admin-2.js"></script>
+    
+</body>
+</html>

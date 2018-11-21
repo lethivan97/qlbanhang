@@ -1,0 +1,64 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Website.Models;
+@model IPagedList<BaoCao>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    th,td{
+        text-align:center;
+        vertical-align:middle;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel  panel-danger">
+            <div class="panel-heading">
+                <h3 class="text-center">Thống kê sản phẩm bán</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Tên nhóm</th>
+                            <th>Số lượng</th>
+                            <th>Giá bán</th>                          
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       @foreach(BaoCao item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/Content/images/Photos/@item.Hinh"  width="90" height="110"/>
+                                </td>
+                                <td>@item.TenSanPham</td>
+                                <td>@item.TenNhom</td>
+                                <td>@item.DonGia</td>
+                                <td>@item.SLBan</td>
+                                <td>@(item.DonGia * item.SLBan)</td>
+                            </tr>
+                        }
+                        <tr>
+                            <th colspan="4">Tổng</th>
+                            <th>@ViewBag.TongSP </th>
+                            <th>@ViewBag.TongTien</th>
+                        </tr>
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        @Html.PagedListPager(Model, sotrang => Url.Action("Index", new { page = sotrang }), new PagedListRenderOptions() { Display = PagedListDisplayMode.Always, DisplayLinkToFirstPage = PagedListDisplayMode.Always, DisplayLinkToLastPage = PagedListDisplayMode.Always })
+    </div>
+</div>
+
+

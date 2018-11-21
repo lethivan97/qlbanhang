@@ -1,0 +1,50 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@using Website.Models;
+@model IEnumerable<BCSPBanTheoThang>
+@{
+    ViewBag.Title = "Bao Cao Theo Thang";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<style>
+    td,th{
+        text-align:center;
+        vertical-align:middle;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h3 style="text-align:center">Thống kê sản phẩm bán theo tháng </h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Số lượng bán</th>
+                            <th>Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(BCSPBanTheoThang item in Model)
+                        {
+                            <tr>
+                                <td>@item.Thang</td>
+                                <td>@item.SLBan</td>
+                                <td>@item.TongTien</td>
+                            </tr>
+                        }
+                        <tr>
+                            <th>Tổng</th>
+                            <th>@ViewBag.TongSPCuaNam</th>
+                            <th>@ViewBag.TongTienCuaNam</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

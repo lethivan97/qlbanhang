@@ -1,0 +1,133 @@
+﻿@using Website.Models
+@model  SanPham
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/validationEngine.jquery.min.css" />
+    <style>
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+
+}
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+<form class="form-horizontal" method="post" action="@Url.Action("Create","SanPham")" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4 style="padding-top:20px">Thêm sản phẩm</h4>
+        <hr />
+        @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+        <div class="form-group">
+            @Html.LabelFor(model=>model.TenSanPham,new { @class = "col-md-4 control-label" } )
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.TenSanPham, new { htmlAttributes = new { @class = "form-control validate[required,maxSize[100]]" } })
+                @Html.ValidationMessageFor(model => model.TenSanPham, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NhomspID, new { @class = "col-md-4 control-label"})
+            <div class="col-md-6">
+                <select name="NhomspID" class="form-control">
+                    @foreach (var itemPhanLoai in ViewBag.listType as IEnumerable<PhanLoai>)
+                    {
+                        <optgroup label="@itemPhanLoai.TenPhanLoai">
+                            @foreach (var itemNhomSP in itemPhanLoai.Nhomsps)
+                            {
+                                <option value="@itemNhomSP.NhomspID"> @itemNhomSP.TenNhomsp </option>
+                            }
+                        </optgroup>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+           @Html.LabelFor(model => model.DonGia, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.DonGia, new { type = "number", min = "0", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DonGia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+           @Html.LabelFor(model => model.GiaKM, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => model.GiaKM, new { type = "number", min = "0", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.GiaKM, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+           @Html.LabelFor(model => model.Hinh, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                <input type="file" name="file" required />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+           @Html.LabelFor(model => model.NgungBan, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @Html.CheckBoxFor(m => m.NgungBan)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BiDanh, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.BiDanh, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BiDanh, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+           @Html.LabelFor(model => model.MoTa, new { @class = "col-md-4 control-label" })
+            <div class="col-md-6">
+                @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control ckeditor", id = "ckeditor" })
+                @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-6">
+                <input type="submit" value="Thêm sản phẩm" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+<div style="margin-bottom:20px">
+    @Html.ActionLink("Về danh sách", "Index", null, new { @class = "btn btn-success btn-sm" })
+</div>
+@section scripts {
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/jquery.validationEngine.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/languages/jquery.validationEngine-en.min.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
+    <script>
+            CKEDITOR.replace("ckeditor");
+            CKFinder.setupCKEditor(null, '/ckfinder');
+    </script>
+    <script>
+                    $("#Browse").click(function () {
+                        var finder = new CKFinder();
+                        finder.selectActionFunction = function (fileUrl) {
+                            //lấy file ảnh cuối cùng
+                            fileUrl = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+                            $("#Hinh").val(fileUrl);
+                        };
+                        finder.popup();
+                    });
+    </script>
+}
+@*<script>
+     jQuery(document).ready(function(){
+       $('#form_create').validationEngine();
+        });
+    </script>*@
